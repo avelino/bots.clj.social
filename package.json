@@ -1,0 +1,14 @@
+{
+  "name": "bots.clj.social",
+  "version": "1.0.0",
+  "description": "official content bots of the clojure community on clj.social",
+  "author": "Avelino",
+  "license": "MIT",
+  "dependencies": {
+    "masto": "^4.6.4",
+    "nbb": "^1.0.144"
+  },
+  "scripts": {
+    "start": "npx nbb -cp src -m social.clj.bots"
+  }
+}
