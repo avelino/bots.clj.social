@@ -1,10 +1,10 @@
 # bots.clj.social [WIP]
 
-Feed process and public on mastodon (__fediverse_ [clj.social](https://clj.social)):
+Feed process and public on mastodon (_fediverse_ [clj.social](https://clj.social)):
 
-- clojure.org"
+- clojure.org
 
-## run
+## run (used [nbb](https://github.com/babashka/nbb))
 
 **ENV VARS:**
 
@@ -12,5 +12,6 @@ Feed process and public on mastodon (__fediverse_ [clj.social](https://clj.socia
 - `ACCESS_TOKEN`: mastodon token
 
 ``` sh
+npm i
 npm run start
 ```
