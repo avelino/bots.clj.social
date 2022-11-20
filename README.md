@@ -1,4 +1,4 @@
-# bots.clj.social [WIP]
+# bots.clj.social [⚠️ WIP]
 
 Feed process and public on mastodon (_fediverse_ [clj.social](https://clj.social)):
 
