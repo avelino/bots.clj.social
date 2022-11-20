@@ -6,7 +6,8 @@
   "license": "MIT",
   "dependencies": {
     "masto": "^4.6.4",
-    "nbb": "^1.0.144"
+    "nbb": "^1.0.144",
+    "redis": "^4.5.0"
   },
   "scripts": {
     "start": "npx nbb -cp src -m social.clj.bots"
