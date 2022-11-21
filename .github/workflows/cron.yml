@@ -19,4 +19,8 @@ jobs:
         with:
           babashka-version: 0.8.1
       - name: run job
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          TOKEN_CLOJURE: ${{ secrets.TOKEN_CLOJURE }}
+          TOKEN_PLANET: ${{ secrets.TOKEN_PLANET }}
         run: npm i && npm run start
