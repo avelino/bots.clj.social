@@ -2,7 +2,7 @@
 
 Feed process and public on mastodon (_fediverse_ [clj.social](https://clj.social)):
 
-- clojure.org
+- clojure.org -> [@clojure@clj.social](https://clj.social/@clojure)
 
 ## run (used [nbb](https://github.com/babashka/nbb))
 
