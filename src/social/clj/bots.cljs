@@ -2,6 +2,8 @@
   (:require ["masto$login" :as login]
             ["redis$default" :as redis]
             ["feed-reader$read" :as feed]
+            ["yaml$default" :as yaml]
+            ["fs" :as fs]
             [nbb.core :as nbb]
             [clojure.walk :as walk]
             [promesa.core :as p]))
@@ -35,31 +37,36 @@
     (prn :save key)
     (nbb/await (.set client key (js/JSON.stringify (clj->js obj))))))
 
-(defn toot-text [obj]
+(defn toot-text [obj hashtags]
   "formats the text that will be published"
   (str (:title obj) "\n\n"
        (:link obj) "\n\n"
        (:description obj) "\n\n"
-       "#clojure #clj #cljs"))
+       hashtags))
 
-(defn feed-reader [client objs]
+(defn feed-reader [clients objs]
   "do in all feed registration and publishing link (key)"
   (let [itens (js->clj objs)
-        entries (sort-by :pubDate
-                         (walk/keywordize-keys (get itens "entries")))]
+        entries (sort-by :published
+                         (walk/keywordize-keys (get itens "entries")))
+        client (:client clients)]
     (doseq [obj entries]
       (p/let [get (.get client (:link obj))]
         (if-not get
-          (let [body (toot-text obj)]
-            ;; (nbb/await (.set client (:key x) (js/JSON.stringify (clj->js x))))
-            ;; public
-            (.then (toot body "private" (:link obj))
+          (let [body (toot-text obj (clients :hashtags))]
+            (.then (toot body "public" (:link obj))
                    (fn [x] (save client x)))))))))
 
 (defn -main []
   (p/let [client redis-conn]
     (.connect client)
-    (.then (feed "https://clojure.org/feed.xml")
-           (fn [x] (feed-reader client x)))
+    (doseq [[k yml] (get (walk/keywordize-keys
+                          (js->clj (yaml/parse
+                                    (fs/readFileSync "./bots.yml" "utf8")))) :bots)]
+      (aset (.-env js/process) "ACCESS_TOKEN" (aget js/process.env (:env yml)))
+      (let [clients {:client client
+                     :hashtags (:hashtags yml)}]
+        (.then (feed (:feed yml))
+               (fn [x] (feed-reader clients x)))))
     ;; (.disconnect client)
     ))

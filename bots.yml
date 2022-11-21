@@ -1,0 +1,5 @@
+bots:
+  clojure:
+    env: TOKEN_CLOJURE
+    feed: https://clojure.org/feed.xml
+    hashtags: "#clojure #clj #cljs"
