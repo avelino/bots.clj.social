@@ -2,8 +2,8 @@
 
 Feed process and public on mastodon (_fediverse_ [clj.social](https://clj.social)):
 
-- clojure.org -> [@clojure@clj.social](https://clj.social/@clojure)
-- planet.clojure.in -> [@planet@clj.social](https://clj.social/@planet)
+- clojure.org -> <a rel="me" href="https://clj.social/@clojure">@clojure@clj.social</a>
+- planet.clojure.in -> <a rel="me" href="https://clj.social/@planet">@planet@clj.social</a>
 
 > New RSS must be added to the [`bots.yml`](./bots.yml) file
 
