@@ -3,3 +3,7 @@ bots:
     env: TOKEN_CLOJURE
     feed: https://clojure.org/feed.xml
     hashtags: "#clojure #clj #cljs"
+  planet:
+    env: TOKEN_PLANET
+    feed: http://planet.clojure.in/atom.xml
+    hashtags: "#clojure #clj #cljs"

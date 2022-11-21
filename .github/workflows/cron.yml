@@ -1,0 +1,22 @@
+name: cron
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    environment: bot
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Setup Babashka
+        uses: turtlequeue/setup-babashka@v1.3.0
+        with:
+          babashka-version: 0.8.1
+      - name: run job
+        run: npm i && npm run start
