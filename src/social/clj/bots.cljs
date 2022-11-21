@@ -8,22 +8,22 @@
             [clojure.walk :as walk]
             [promesa.core :as p]))
 
-(def masto
+(defn masto [token]
   "instantiate mastodon client, using token from env var"
-  (nbb/await
-   (login #js{:url "https://clj.social"
-              :accessToken js/process.env.ACCESS_TOKEN})))
+  (login #js{:url "https://clj.social"
+             :accessToken token}))
 
 (def redis-conn
   "redis client init"
   (redis/createClient
    #js{:url js/process.env.DATABASE_URL}))
 
-(defn toot [status visibility key]
+(defn toot [status visibility key token]
   "public toot"
   (nbb/await
-   (p/let [body (.create masto.statuses #js{:status status
-                                            :visibility visibility})
+   (p/let [cli (masto token)
+           body (.create (.-statuses cli) #js{:status status
+                                              :visibility visibility})
            obj (js->clj body)
            id (get obj "id")
            createdat (get obj "createdAt")]
@@ -54,7 +54,7 @@
       (p/let [get (.get client (:link obj))]
         (if-not get
           (let [body (toot-text obj (clients :hashtags))]
-            (.then (toot body "public" (:link obj))
+            (.then (toot body "public" (:link obj) (:token clients))
                    (fn [x] (save client x)))))))))
 
 (defn -main []
@@ -63,8 +63,8 @@
     (doseq [[k yml] (get (walk/keywordize-keys
                           (js->clj (yaml/parse
                                     (fs/readFileSync "./bots.yml" "utf8")))) :bots)]
-      (aset (.-env js/process) "ACCESS_TOKEN" (aget js/process.env (:env yml)))
       (let [clients {:client client
+                     :token (aget js/process.env (:env yml))
                      :hashtags (:hashtags yml)}]
         (.then (feed (:feed yml))
                (fn [x] (feed-reader clients x)))))
