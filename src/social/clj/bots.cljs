@@ -59,14 +59,15 @@
 
 (defn -main []
   (p/let [client redis-conn]
-    (.connect client)
-    (doseq [[k yml] (get (walk/keywordize-keys
-                          (js->clj (yaml/parse
-                                    (fs/readFileSync "./bots.yml" "utf8")))) :bots)]
-      (let [clients {:client client
-                     :token (aget js/process.env (:env yml))
-                     :hashtags (:hashtags yml)}]
-        (.then (feed (:feed yml))
-               (fn [x] (feed-reader clients x)))))
-    ;; (.disconnect client)
-    ))
+    (p/do
+      (.connect client)
+      (fn []
+        (doseq [[k yml] (get (walk/keywordize-keys
+                              (js->clj (yaml/parse
+                                        (fs/readFileSync "./bots.yml" "utf8")))) :bots)]
+          (let [clients {:client client
+                         :token (aget js/process.env (:env yml))
+                         :hashtags (:hashtags yml)}]
+            (.then (feed (:feed yml))
+                   (fn [x] (feed-reader clients x))))))
+      (.disconnect client))))
