@@ -12,6 +12,7 @@ Feed process and public on mastodon (_fediverse_ [clj.social](https://clj.social
 **ENV VARS:**
 
 - `DATABASE_URL`: redis
+- `CONFIG_BOTS`: set path `yaml` file __(default `./bots.yml`)__
 
 ``` sh
 npm i

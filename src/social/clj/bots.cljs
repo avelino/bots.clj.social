@@ -73,5 +73,6 @@
   (p/let [client redis-conn]
     (p/do
       (.connect client)
-      (read-config client "./bots.yml")
+      (read-config client (or js/process.env.CONFIG_BOTS
+                              "./bots.yml"))
       (.disconnect client))))
