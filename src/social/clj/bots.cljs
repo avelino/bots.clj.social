@@ -57,17 +57,21 @@
             (.then (toot body "public" (:link obj) (:token clients))
                    (fn [x] (save client x)))))))))
 
+(defn read-config [client yaml-name]
+  "reads the configuration file (yaml) and calls the function to process the feed"
+  (p/doseq [[k yml] (get (walk/keywordize-keys
+                          (js->clj (yaml/parse
+                                    (fs/readFileSync yaml-name "utf8")))) :bots)]
+    (let [clients {:client client
+                   :token (aget js/process.env (:env yml))
+                   :hashtags (:hashtags yml)}]
+      (.then (feed (:feed yml))
+             (fn [x] (feed-reader clients x))))))
+
 (defn -main []
+  "initial software here"
   (p/let [client redis-conn]
     (p/do
       (.connect client)
-      (fn []
-        (doseq [[k yml] (get (walk/keywordize-keys
-                              (js->clj (yaml/parse
-                                        (fs/readFileSync "./bots.yml" "utf8")))) :bots)]
-          (let [clients {:client client
-                         :token (aget js/process.env (:env yml))
-                         :hashtags (:hashtags yml)}]
-            (.then (feed (:feed yml))
-                   (fn [x] (feed-reader clients x))))))
+      (read-config client "./bots.yml")
       (.disconnect client))))
