@@ -65,8 +65,8 @@
     (let [clients {:client client
                    :token (aget js/process.env (:env yml))
                    :hashtags (:hashtags yml)}]
-      (.then (feed (:feed yml))
-             (fn [x] (feed-reader clients x))))))
+      (p/then (feed (:feed yml))
+              (fn [x] (feed-reader clients x))))))
 
 (defn -main []
   "initial software here"
