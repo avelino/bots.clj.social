@@ -1,4 +1,4 @@
-# bots.clj.social
+# bots.clj.social [![cron](https://github.com/avelino/bots.clj.social/actions/workflows/cron.yml/badge.svg?branch=main)](https://github.com/avelino/bots.clj.social/actions/workflows/cron.yml)
 
 Feed process and public on mastodon (_fediverse_ [clj.social](https://clj.social)):
 
