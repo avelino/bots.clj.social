@@ -1,6 +1,6 @@
 {
   "name": "bots.clj.social",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "official content bots of the clojure community on clj.social",
   "author": "Avelino",
   "license": "MIT",
