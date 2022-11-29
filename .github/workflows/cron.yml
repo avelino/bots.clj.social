@@ -16,15 +16,16 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '19'
+          cache: 'npm'
       - name: Setup Babashka
         uses: turtlequeue/setup-babashka@v1.5.0
         with:
           babashka-version: 1.0.165
       - name: npm install
         run: npm i
-      - name: publish content
+      - name: publish toots
         env:
           DATABASE_URL: '${{ secrets.DATABASE_URL }}'
           TOKEN_CLOJURE: '${{ secrets.TOKEN_CLOJURE }}'
           TOKEN_PLANET: '${{ secrets.TOKEN_PLANET }}'
-        run: npm i && npm run start
+        run: npm run start
