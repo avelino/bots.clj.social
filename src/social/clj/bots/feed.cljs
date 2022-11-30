@@ -23,8 +23,13 @@
               get (.get client key)]
         (if-not get
           (let [body (mastodon/toot-text obj (clients :hashtags))]
-            (.then (mastodon/toot body "public" key (:token clients))
-                   (fn [x] (db/save client x)))))))))
+            (.then
+             (mastodon/toot body "public" key (:token clients))
+             (fn [x]
+               (try
+                 (db/save client x)
+                 (catch :default e
+                   (mastodon/remove (:toot-id x) (:token clients) e)))))))))))
 
 (defn feed-process [clients url]
   "download the rss/feed/atom contained in the url"
