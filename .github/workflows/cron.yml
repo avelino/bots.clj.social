@@ -10,7 +10,7 @@ jobs:
   job:
     runs-on: ubuntu-latest
     environment: bot
-    timeout-minute: 1
+    timeout-minutes: 1
     steps:
       - name: Checkout
         uses: actions/checkout@v3
