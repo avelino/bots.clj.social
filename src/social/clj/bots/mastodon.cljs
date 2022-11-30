@@ -21,6 +21,13 @@
       :toot-id id
       :key key})))
 
+(defn remove [toot-id token because]
+  "remove toot"
+  (prn :toot-remove :toot-id toot-id :because because)
+  (nbb/await
+   (p/let [cli (masto token)]
+     (.remove (.-statuses cli) toot-id))))
+
 (defn toot-text [obj hashtags]
   "formats the text that will be published"
   (str (:title obj) "\n\n"
