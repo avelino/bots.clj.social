@@ -9,5 +9,5 @@ bots:
     hashtags: "#clojure #clj #cljs"
   racketlang:
     env: TOKEN_RACKETLANG
-    feed: https://blog.racket-lang.org/feeds/all.atom.xml
+    feed: https://webfeed.deta.dev/api/xmlify?url=https://blog.racket-lang.org/feeds/all.atom.xml # https://blog.racket-lang.org/feeds/all.atom.xml
     hashtags: "#racketlang #lisp"
