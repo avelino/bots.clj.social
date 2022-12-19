@@ -29,4 +29,5 @@ jobs:
           DATABASE_URL: '${{ secrets.DATABASE_URL }}'
           TOKEN_CLOJURE: '${{ secrets.TOKEN_CLOJURE }}'
           TOKEN_PLANET: '${{ secrets.TOKEN_PLANET }}'
+          TOKEN_RACKETLANG: '${{ secrets.TOKEN_RACKETLANG }}'
         run: npm run start
