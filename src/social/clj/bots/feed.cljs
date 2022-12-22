@@ -24,7 +24,7 @@
         (if-not get
           (let [body (mastodon/toot-text obj (clients :hashtags))]
             (.then
-             (mastodon/toot body "public" key (:token clients))
+             (mastodon/toot body "unlisted" key (:token clients))
              (fn [x]
                (try
                  (db/save client x)
