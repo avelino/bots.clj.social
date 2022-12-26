@@ -12,8 +12,11 @@
   "public toot"
   (nbb/await
    (p/let [cli (masto token)
-           body (.create (.-statuses cli) #js{:status status
-                                              :visibility visibility})
+           v1 (.-v1 cli)
+           body (.create
+                 (.-statuses v1)
+                 #js {:status status
+                      :visibility visibility})
            obj (js->clj body)
            id (get obj "id")
            createdat (get obj "createdAt")]
