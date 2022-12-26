@@ -11,7 +11,7 @@
     "nbb": "^1.1.156",
     "redis": "^4.5.1",
     "slugify": "^1.6.5",
-    "yaml": "^2.1.3"
+    "yaml": "^2.2.0"
   },
   "scripts": {
     "start": "npx nbb -cp src -m social.clj.bots.core"
