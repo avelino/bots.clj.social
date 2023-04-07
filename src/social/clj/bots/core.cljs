@@ -22,10 +22,10 @@
   (p/let [client db/redis-conn]
     (p/do
       (.connect client)
+      (.ping client)
       (config-reader client (or js/process.env.CONFIG_BOTS
                                 "./bots.yml"))
       ;; TODO: connection is closing earlier than expected,
       ;; causing the save to database process to fail.
       ;; I put a time limit on gh actions
-      ;; (nbb/await (.quit client))
-      )))
+      (.quit client))))
