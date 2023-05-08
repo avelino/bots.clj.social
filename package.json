@@ -6,7 +6,7 @@
   "license": "MIT",
   "dependencies": {
     "feed-reader": "^6.1.3",
-    "masto": "^5.11.2",
+    "masto": "^5.11.3",
     "md5": "^2.3.0",
     "redis": "^4.6.6",
     "nbb": "^1.2.173",
