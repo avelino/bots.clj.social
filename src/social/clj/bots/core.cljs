@@ -4,7 +4,6 @@
             [social.clj.bots.db :as db]
             [social.clj.bots.feed :as feed]
             [clojure.walk :as walk]
-            [nbb.core :as nbb]
             [promesa.core :as p]))
 
 (defn config-reader [client yaml-name]
