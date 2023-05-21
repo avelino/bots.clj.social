@@ -2,3 +2,4 @@ node_modules
 .lsp
 **/.clj-kondo/.cache
 .envrc
+.dccache

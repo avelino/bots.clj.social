@@ -8,12 +8,14 @@
             [clojure.string :as str]
             [promesa.core :as p]))
 
-(defn unique-hash [url]
+(defn unique-hash
   "takes an url, converts it into a slug and returns a hash (md5)"
+  [url]
   (md5 (slugify (str/replace url #"https://|http://" ""))))
 
-(defn feed-reader [clients objs]
+(defn feed-reader
   "do in all feed registration and publishing link (key)"
+  [clients objs]
   (let [itens (js->clj objs)
         entries (sort-by :published
                          (walk/keywordize-keys (get itens "entries")))
@@ -31,8 +33,9 @@
                  (catch :default e
                    (mastodon/remove (:toot-id x) (:token clients) e)))))))))))
 
-(defn feed-process [clients url]
+(defn feed-process
   "download the rss/feed/atom contained in the url"
+  [clients url]
   (prn :feed url)
   (p/then (feed url)
           (fn [x] (feed-reader clients x))))

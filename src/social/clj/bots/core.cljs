@@ -6,8 +6,9 @@
             [clojure.walk :as walk]
             [promesa.core :as p]))
 
-(defn config-reader [client yaml-name]
+(defn config-reader
   "reads the configuration file (yaml) and calls the function to process the feed"
+  [client yaml-name]
   (p/doseq [[k yml] (get (walk/keywordize-keys
                           (js->clj (yaml/parse
                                     (fs/readFileSync yaml-name "utf8")))) :bots)]
@@ -16,8 +17,9 @@
                    :hashtags (:hashtags yml)}]
       (feed/feed-process clients (:feed yml)))))
 
-(defn -main []
+(defn -main
   "initial software here"
+  []
   (p/let [client db/redis-conn]
     (p/do
       (.connect client)

@@ -7,8 +7,9 @@
   (redis/createClient
    #js{:url js/process.env.DATABASE_URL}))
 
-(defn save [client obj]
+(defn save
   "save data in the storer"
+  [client obj]
   (let [key (:key obj)]
     (prn :save key)
     (nbb/await (.set client key (js/JSON.stringify (clj->js obj))))))

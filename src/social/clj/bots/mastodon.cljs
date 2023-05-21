@@ -8,8 +8,9 @@
   (login #js{:url "https://clj.social"
              :accessToken token}))
 
-(defn toot [status visibility key token]
+(defn toot
   "public toot"
+  [status visibility key token]
   (nbb/await
    (p/let [cli (masto token)
            v1 (.-v1 cli)
@@ -24,15 +25,17 @@
       :toot-id id
       :key key})))
 
-(defn remove [toot-id token because]
+(defn remove
   "remove toot"
+  [toot-id token because]
   (prn :toot-remove :toot-id toot-id :because because)
   (nbb/await
    (p/let [cli (masto token)]
      (.remove (.-statuses cli) toot-id))))
 
-(defn toot-text [obj hashtags]
+(defn toot-text
   "formats the text that will be published"
+  [obj hashtags]
   (str (:title obj) "\n\n"
        (:link obj) "\n\n"
        (:description obj) "\n\n"
