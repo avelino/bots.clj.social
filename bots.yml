@@ -7,7 +7,7 @@ bots:
     env: TOKEN_PLANET
     feed: http://planet.clojure.in/atom.xml
     hashtags: "#clojure #clj #cljs"
-  racketlang:
-    env: TOKEN_RACKETLANG
-    feed: https://webfeed.deta.dev/api/xmlify?url=https://blog.racket-lang.org/feeds/all.atom.xml # https://blog.racket-lang.org/feeds/all.atom.xml
-    hashtags: "#racketlang #lisp"
+  #racketlang:
+  #  env: TOKEN_RACKETLANG
+  #  feed: https://blog.racket-lang.org/feeds/all.atom.xml # https://github.com/racket/racket-lang-org/issues/235
+  #  hashtags: "#racketlang #lisp"
