@@ -1,5 +1,5 @@
 (ns social.clj.bots.feed
-  (:require ["feed-reader$read" :as feed]
+  (:require ["@extractus/feed-extractor$extract" :as extract]
             ["slugify$default" :as slugify]
             ["md5$default" :as md5]
             [social.clj.bots.db :as db]
@@ -37,5 +37,6 @@
   "download the rss/feed/atom contained in the url"
   [clients url]
   (prn :feed url)
-  (p/then (feed url)
+  (p/then (extract url #js{:headers #js{:user-agent "Mozilla/5.0"
+                                        :content-type "application/rss+xml"}})
           (fn [x] (feed-reader clients x))))
