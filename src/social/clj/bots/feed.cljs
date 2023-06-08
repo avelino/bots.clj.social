@@ -1,5 +1,7 @@
 (ns social.clj.bots.feed
   (:require ["@extractus/feed-extractor$extract" :as extract]
+            ["@extractus/feed-extractor$extractFromXml" :as extract-xml]
+            ["cross-fetch$default" :as fetch]
             ["slugify$default" :as slugify]
             ["md5$default" :as md5]
             [social.clj.bots.db :as db]
@@ -23,20 +25,25 @@
     (doseq [obj entries]
       (p/let [key (unique-hash (:link obj))
               get (.get client key)]
+        ;; if the key is not present in the db
         (if-not get
-          (let [body (mastodon/toot-text obj (clients :hashtags))]
-            (.then
-             (mastodon/toot body "unlisted" key (:token clients))
-             (fn [x]
-               (try
-                 (db/save client x)
-                 (catch :default e
-                   (mastodon/remove (:toot-id x) (:token clients) e)))))))))))
+          (p/let [body (mastodon/toot-text obj (clients :hashtags))
+                  toot (mastodon/toot body "unlisted" key (:token clients))]
+            (try
+              (db/save client toot)
+              (catch :default e
+                ;; if the toot is not saved, remove it from mastodon
+                (mastodon/remove (:toot-id toot)
+                                 (:token clients) e)))))))))
 
 (defn feed-process
   "download the rss/feed/atom contained in the url"
-  [clients url]
-  (prn :feed url)
-  (p/then (extract url #js{:headers #js{:user-agent "Mozilla/5.0"
-                                        :content-type "application/rss+xml"}})
-          (fn [x] (feed-reader clients x))))
+  [clients url & {:keys [xml] :or {xml false}}]
+  (let [headers #js{:headers #js{:user-agent "Mozilla/5.0"
+                                 :content-type "application/rss+xml"}}]
+    (if-not xml
+      (p/then (extract url headers)
+              (fn [x] (feed-reader clients x)))
+      (p/let [req (fetch url headers)
+              body (.text req)]
+        (feed-reader clients (extract-xml body))))))

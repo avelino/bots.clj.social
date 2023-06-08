@@ -15,7 +15,8 @@
     (let [clients {:client client
                    :token (aget js/process.env (:env yml))
                    :hashtags (:hashtags yml)}]
-      (feed/feed-process clients (:feed yml)))))
+      (feed/feed-process clients (:feed yml)
+                         :xml (or (:xml yml) false)))))
 
 (defn -main
   "initial software here"
