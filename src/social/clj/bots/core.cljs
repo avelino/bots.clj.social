@@ -30,4 +30,5 @@
       ;; TODO: connection is closing earlier than expected,
       ;; causing the save to database process to fail.
       ;; I put a time limit on gh actions
+      (js/setTimeout (fn []) 10000)
       (.quit client))))
