@@ -27,8 +27,9 @@
               get (.get client key)]
         ;; if the key is not present in the db
         (if-not get
+          ;; publishing levels: public, unlisted
           (p/let [body (mastodon/toot-text obj (clients :hashtags))
-                  toot (mastodon/toot body "unlisted" key (:token clients))]
+                  toot (mastodon/toot body "public" key (:token clients))]
             (try
               (db/save client toot)
               (catch :default e
