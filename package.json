@@ -7,7 +7,7 @@
   "dependencies": {
     "@extractus/feed-extractor": "^6.2.3",
     "fast-xml-parser": ">=4.2.5",
-    "cross-fetch": "^3.1.6",
+    "cross-fetch": "^3.1.8",
     "masto": "^5.11.3",
     "md5": "^2.3.0",
     "nbb": "^1.2.174",
