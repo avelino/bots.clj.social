@@ -15,6 +15,17 @@
   [url]
   (md5 (slugify (str/replace url #"https://|http://" ""))))
 
+(defn link-exists?
+  "checks if the link return http status code 200
+   if it does, it's public, otherwise it's private"
+  [link]
+  (p/let [req (fetch link)]
+
+    (println :status (.status req))
+    (if (= (.status req) 200)
+      "public"
+      "private")))
+
 (defn feed-reader
   "do in all feed registration and publishing link (key)"
   [clients objs]
@@ -29,7 +40,7 @@
         (if-not get
           ;; publishing levels: public, unlisted
           (p/let [body (mastodon/toot-text obj (clients :hashtags))
-                  toot (mastodon/toot body "public" key (:token clients))]
+                  toot (mastodon/toot body (link-exists? (:link obj)) key (:token clients))]
             (try
               (db/save client toot)
               (catch :default e
