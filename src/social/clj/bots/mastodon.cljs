@@ -1,5 +1,5 @@
 (ns social.clj.bots.mastodon
-  (:require ["masto$login" :as login]
+  (:require ["masto$createRestAPIClient" :as login]
             [nbb.core :as nbb]
             [promesa.core :as p]))
 
