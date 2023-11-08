@@ -2,13 +2,13 @@ bots:
   clojure:
     env: TOKEN_CLOJURE
     feed: https://clojure.org/feed.xml
-    hashtags: "#clojure #clj #cljs"
+    hashtags: "#clojure #clj #cljs @clojure@lemmy.ml"
   planet:
     env: TOKEN_PLANET
     feed: http://planet.clojure.in/atom.xml
-    hashtags: "#clojure #clj #cljs"
+    hashtags: "#clojure #clj #cljs @clojure@lemmy.ml"
   racketlang:
     env: TOKEN_RACKETLANG
     feed: https://blog.racket-lang.org/feeds/all.atom.xml
     xml: true
-    hashtags: "#racketlang #lisp"
+    hashtags: "#racketlang #lisp @racketlang@functional.cafe @racket@lemmy.ml"
