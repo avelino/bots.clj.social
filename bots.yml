@@ -7,11 +7,6 @@ bots:
     env: TOKEN_PLANET
     feed: http://planet.clojure.in/atom.xml
     hashtags: "#clojure #clj #cljs !clojure@lemmy.ml"
-  juxtpro:
-    env: TOKEN_PLANET
-    feed: https://www.juxt.pro//feed.xml
-    hashtags: "#clojure #clj #cljs !clojure@lemmy.ml"
-    rematcher: "clojure|clj"
   racketlang:
     env: TOKEN_RACKETLANG
     feed: https://blog.racket-lang.org/feeds/all.atom.xml
