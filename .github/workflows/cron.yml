@@ -30,4 +30,5 @@ jobs:
           TOKEN_CLOJURE: '${{ secrets.TOKEN_CLOJURE }}'
           TOKEN_PLANET: '${{ secrets.TOKEN_PLANET }}'
           TOKEN_RACKETLANG: '${{ secrets.TOKEN_RACKETLANG }}'
+          TOKEN_LOGSEQ: '${{ secrets.TOKEN_LOGSEQ }}'
         run: npm run start
