@@ -42,7 +42,8 @@
         entries (sort-by :published
                          (walk/keywordize-keys (get itens "entries")))
         client (:client clients)]
-    (doseq [obj entries]
+    (doseq [obj entries
+            :while (matcher? (:matcher clients) obj)]
       (p/let [key (unique-hash (:link obj))
               get (.get client key)]
         ;; if the key is not present in the db
