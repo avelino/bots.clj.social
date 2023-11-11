@@ -26,6 +26,15 @@
       "public"
       "private")))
 
+(defn matcher?
+  "checks if the title or description contains the matcher"
+  [matcher obj]
+  (if (nil?  matcher)
+    true
+    (if (nil? (.match (str (:title obj) (:description obj)) matcher))
+      false
+      true)))
+
 (defn feed-reader
   "do in all feed registration and publishing link (key)"
   [clients objs]
@@ -33,7 +42,8 @@
         entries (sort-by :published
                          (walk/keywordize-keys (get itens "entries")))
         client (:client clients)]
-    (doseq [obj entries]
+    (doseq [obj entries
+            :while (matcher? (:matcher clients) obj)]
       (p/let [key (unique-hash (:link obj))
               get (.get client key)]
         ;; if the key is not present in the db
