@@ -20,21 +20,11 @@
    if it does, it's public, otherwise it's private"
   [link]
   (p/let [req (fetch link)]
+
     (println :status (.status req))
     (if (= (.status req) 200)
       "public"
       "private")))
-
-(defn matcher?
-  "checks if the title or description contains the matcher"
-  [matcher obj]
-  (if (nil?  matcher)
-    true
-    (if (nil? (re-find (re-matcher
-                        matcher
-                        (str (:title obj) (:description obj)))))
-      false
-      true)))
 
 (defn feed-reader
   "do in all feed registration and publishing link (key)"
@@ -43,18 +33,14 @@
         entries (sort-by :published
                          (walk/keywordize-keys (get itens "entries")))
         client (:client clients)]
-    (doseq [obj entries
-            :while (matcher? (:matcher clients) obj)]
+    (doseq [obj entries]
       (p/let [key (unique-hash (:link obj))
               get (.get client key)]
         ;; if the key is not present in the db
         (if-not get
           ;; publishing levels: public, unlisted
           (p/let [body (mastodon/toot-text obj (clients :hashtags))
-                  toot (mastodon/toot body
-                                      (link-exists? (:link obj))
-                                      key
-                                      (:token clients))]
+                  toot (mastodon/toot body (link-exists? (:link obj)) key (:token clients))]
             (try
               (db/save client toot)
               (catch :default e
