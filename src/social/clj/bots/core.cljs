@@ -14,8 +14,7 @@
                                     (fs/readFileSync yaml-name "utf8")))) :bots)]
     (let [clients {:client client
                    :token (aget js/process.env (:env yml))
-                   :hashtags (:hashtags yml)
-                   :matcher #(:matcher yml)}]
+                   :hashtags (:hashtags yml)}]
       (feed/feed-process clients (:feed yml)
                          :xml (or (:xml yml) false)))))
 
