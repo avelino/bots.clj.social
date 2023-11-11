@@ -31,7 +31,7 @@
   (if (nil?  matcher)
     true
     (if (nil? (re-find (re-matcher
-                        #"clojure|racket|clj"
+                        matcher
                         (str (:title obj) (:description obj)))))
       false
       true)))
