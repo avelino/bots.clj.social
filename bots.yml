@@ -9,7 +9,7 @@ bots:
     hashtags: "#clojure #clj #cljs @clojure@lemmy.ml !clojure@lemmy.ml"
   juxtpro:
     env: TOKEN_PLANET
-    feed: https://www.juxt.pro//feed.xml
+    feed: https://www.juxt.pro/feed.xml
     hashtags: "#clojure #clj #cljs @clojure@lemmy.ml !clojure@lemmy.ml"
     rematcher: "clojure|clj"
   racketlang:
@@ -17,3 +17,7 @@ bots:
     feed: https://blog.racket-lang.org/feeds/all.atom.xml
     xml: true
     hashtags: "#racketlang #lisp @racketlang@functional.cafe @racket@lemmy.ml !racket@lemmy.ml"
+  logseq:
+    env: TOKEN_LOGSEQ
+    feed: https://blog.logseq.com/rss/
+    hashtags: "#logseq #pkm @logseq@lemmy.ml !logseq@lemmy.ml"
