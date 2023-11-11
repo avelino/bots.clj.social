@@ -30,9 +30,7 @@
   [matcher obj]
   (if (nil?  matcher)
     true
-    (if (nil? (re-find (re-matcher
-                        matcher
-                        (str (:title obj) (:description obj)))))
+    (if (nil? (.match (str (:title obj) (:description obj)) matcher))
       false
       true)))
 
