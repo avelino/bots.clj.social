@@ -8,7 +8,7 @@
     "@extractus/feed-extractor": "^7.0.6",
     "fast-xml-parser": ">=4.3.2",
     "cross-fetch": "^4.0.0",
-    "masto": "^6.4.2",
+    "masto": "^6.5.0",
     "md5": "^2.3.0",
     "nbb": "^1.2.179",
     "redis": "^4.6.10",
