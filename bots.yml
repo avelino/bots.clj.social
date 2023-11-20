@@ -2,26 +2,26 @@ bots:
   clojure:
     env: TOKEN_CLOJURE
     feed: https://clojure.org/feed.xml
-    hashtags: "#clojure #clj #cljs !clojure@lemmy.ml"
+    hashtags: "#clojure #clj #cljs !clojure@lemmy.ml @clojure@lemmy.ml"
   planet:
     env: TOKEN_PLANET
     feed: http://planet.clojure.in/atom.xml
-    hashtags: "#clojure #clj #cljs !clojure@lemmy.ml"
+    hashtags: "#clojure #clj #cljs !clojure@lemmy.ml @clojure@lemmy.ml"
   juxtpro:
     env: TOKEN_PLANET
     feed: https://www.juxt.pro/feed.xml
-    hashtags: "#clojure #clj #cljs !clojure@lemmy.ml"
+    hashtags: "#clojure #clj #cljs !clojure@lemmy.ml @clojure@lemmy.ml"
     rematcher: "clojure|clj"
   racketlang:
     env: TOKEN_RACKETLANG
     feed: https://blog.racket-lang.org/feeds/all.atom.xml
     xml: true
-    hashtags: "#racketlang #lisp @racketlang@functional.cafe !racket@lemmy.ml"
+    hashtags: "#racketlang #lisp @racketlang@functional.cafe !racket@lemmy.ml @racket@lemmy.ml"
   logseq:
     env: TOKEN_LOGSEQ
     feed: https://blog.logseq.com/rss/
-    hashtags: "#logseq #pkm !logseq@lemmy.ml"
+    hashtags: "#logseq #pkm !logseq@lemmy.ml @logseq@lemmy.ml"
   logseqtimes:
     env: TOKEN_LOGSEQ
     feed: https://www.logseqtimes.com/rss/
-    hashtags: "by @ednico@pkm.social #logseq #pkm !logseq@lemmy.ml"
+    hashtags: "by @ednico@pkm.social #logseq #pkm !logseq@lemmy.ml @logseq@lemmy.ml"
