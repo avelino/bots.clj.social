@@ -26,6 +26,7 @@ jobs:
         run: npm i
       - name: publish toots
         env:
+          NODE_TLS_REJECT_UNAUTHORIZED: '0'
           DATABASE_URL: '${{ secrets.DATABASE_URL }}'
           TOKEN_CLOJURE: '${{ secrets.TOKEN_CLOJURE }}'
           TOKEN_PLANET: '${{ secrets.TOKEN_PLANET }}'
