@@ -20,7 +20,6 @@
    if it does, it's public, otherwise it's private"
   [link]
   (p/let [req (fetch link)]
-
     (println :status (.status req))
     (if (= (.status req) 200)
       "public"
@@ -68,4 +67,6 @@
               (fn [x] (feed-reader clients x)))
       (p/let [req (fetch url headers)
               body (.text req)]
-        (feed-reader clients (extract-xml body))))))
+        (if-not (empty? body)
+          (feed-reader clients (extract-xml body)))))))
+        
