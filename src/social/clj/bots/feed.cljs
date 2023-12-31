@@ -67,6 +67,4 @@
               (fn [x] (feed-reader clients x)))
       (p/let [req (fetch url headers)
               body (.text req)]
-        (if (= (.status req) 200)
-          (feed-reader clients (extract-xml body)))))))
-        
+        (feed-reader clients (extract-xml body))))))
