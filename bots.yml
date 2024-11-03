@@ -21,6 +21,10 @@ bots:
     env: TOKEN_LOGSEQ
     feed: https://blog.logseq.com/rss/
     hashtags: "#logseq #pkm !logseq@lemmy.ml @logseq@lemmy.ml"
+  logseqdiscuss:
+    env: TOKEN_LOGSEQ
+    feed: https://discuss.logseq.com/top/all.rss
+    hashtags: "#logseq #pkm !logseq@lemmy.ml @logseq@lemmy.ml"
   # logseqtimes:
   #   env: TOKEN_LOGSEQ
   #   feed: https://www.logseqtimes.com/rss/
