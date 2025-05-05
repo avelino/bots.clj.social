@@ -5,7 +5,7 @@
   "author": "Avelino",
   "license": "MIT",
   "dependencies": {
-    "@extractus/feed-extractor": "^7.1.4",
+    "@extractus/feed-extractor": "^7.1.5",
     "fast-xml-parser": ">=5.0.9",
     "cross-fetch": "^4.1.0",
     "masto": "^6.10.3",
