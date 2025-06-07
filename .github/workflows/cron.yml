@@ -1,23 +1,23 @@
 name: cron
 on:
   schedule:
-    - cron:  '0 */3 * * *'
+    - cron: "0 */3 * * *"
   push:
     branches:
-      - 'main'
+      - "main"
 
 jobs:
   job:
     runs-on: ubuntu-latest
     environment: bot
-    timeout-minutes: 1
+    timeout-minutes: 3
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '19'
-          cache: 'npm'
+          node-version: "19"
+          cache: "npm"
       - name: Setup Babashka
         uses: turtlequeue/setup-babashka@v1.7.0
         with:
@@ -26,10 +26,10 @@ jobs:
         run: npm i
       - name: publish toots
         env:
-          NODE_TLS_REJECT_UNAUTHORIZED: '0'
-          DATABASE_URL: '${{ secrets.DATABASE_URL }}'
-          TOKEN_CLOJURE: '${{ secrets.TOKEN_CLOJURE }}'
-          TOKEN_PLANET: '${{ secrets.TOKEN_PLANET }}'
-          TOKEN_RACKETLANG: '${{ secrets.TOKEN_RACKETLANG }}'
-          TOKEN_LOGSEQ: '${{ secrets.TOKEN_LOGSEQ }}'
+          NODE_TLS_REJECT_UNAUTHORIZED: "0"
+          DATABASE_URL: "${{ secrets.DATABASE_URL }}"
+          TOKEN_CLOJURE: "${{ secrets.TOKEN_CLOJURE }}"
+          TOKEN_PLANET: "${{ secrets.TOKEN_PLANET }}"
+          TOKEN_RACKETLANG: "${{ secrets.TOKEN_RACKETLANG }}"
+          TOKEN_LOGSEQ: "${{ secrets.TOKEN_LOGSEQ }}"
         run: npm run start
