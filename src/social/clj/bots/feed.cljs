@@ -40,22 +40,24 @@
   (let [itens (js->clj objs)
         entries (sort-by :published
                          (walk/keywordize-keys (get itens "entries")))
-        client (:client clients)]
-    (doseq [obj entries
-            :while (matcher? (:matcher clients) obj)]
-      (p/let [key (unique-hash (:link obj))
-              get (.get client key)]
-        ;; if the key is not present in the db
-        (if-not get
-          ;; publishing levels: public, unlisted
-          (p/let [body (mastodon/toot-text obj (clients :hashtags))
-                  toot (mastodon/toot body (link-exists? (:link obj)) key (:token clients))]
-            (try
-              (db/save client toot)
-              (catch :default e
-                ;; if the toot is not saved, remove it from mastodon
-                (mastodon/remove (:toot-id toot)
-                                 (:token clients) e)))))))))
+        client (:client clients)
+        filtered-entries (take-while #(matcher? (:matcher clients) %) entries)]
+    (p/all (for [obj filtered-entries]
+             (p/let [key (unique-hash (:link obj))
+                     get (.get client key)]
+               ;; if the key is not present in the db
+               (if-not get
+                 ;; publishing levels: public, unlisted
+                 (p/let [body (mastodon/toot-text obj (clients :hashtags))
+                         toot (mastodon/toot body (link-exists? (:link obj)) key (:token clients))]
+                   (try
+                     (db/save client toot)
+                     (catch :default e
+                       ;; if the toot is not saved, remove it from mastodon
+                       (mastodon/remove (:toot-id toot)
+                                        (:token clients) e))))
+                 ;; return nil if already processed
+                 nil))))))
 
 (defn feed-process
   "download the rss/feed/atom contained in the url"
@@ -63,8 +65,9 @@
   (let [headers #js{:headers #js{:user-agent "Mozilla/5.0"
                                  :content-type "application/rss+xml"}}]
     (if-not xml
-      (p/then (extract url headers)
-              (fn [x] (feed-reader clients x)))
+      (p/let [feed-data (extract url headers)]
+        (feed-reader clients feed-data))
       (p/let [req (fetch url headers)
-              body (.text req)]
-        (feed-reader clients (extract-xml body))))))
+              body (.text req)
+              feed-data (extract-xml body)]
+        (feed-reader clients feed-data)))))

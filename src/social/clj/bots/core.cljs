@@ -9,15 +9,17 @@
 (defn config-reader
   "reads the configuration file (yaml) and calls the function to process the feed"
   [client yaml-name]
-  (p/doseq [[k yml] (get (walk/keywordize-keys
-                          (js->clj (yaml/parse
-                                    (fs/readFileSync yaml-name "utf8")))) :bots)]
-    (let [clients {:client client
-                   :token (aget js/process.env (:env yml))
-                   :hashtags (:hashtags yml)
-                   :matcher (:matcher yml)}]
-      (feed/feed-process clients (:feed yml)
-                         :xml (or (:xml yml) false)))))
+  (p/let [config (walk/keywordize-keys
+                  (js->clj (yaml/parse
+                            (fs/readFileSync yaml-name "utf8"))))
+          bots (:bots config)]
+    (p/all (for [[k yml] bots]
+             (let [clients {:client client
+                            :token (aget js/process.env (:env yml))
+                            :hashtags (:hashtags yml)
+                            :matcher (:matcher yml)}]
+               (feed/feed-process clients (:feed yml)
+                                  :xml (or (:xml yml) false)))))))
 
 (defn -main
   "initial software here"
@@ -26,11 +28,8 @@
     (p/do
       (.connect client)
       (.ping client)
-      (config-reader client (or js/process.env.CONFIG_BOTS
-                                "./bots.yml"))
-      ;; TODO: connection is closing earlier than expected,
-      ;; causing the save to database process to fail.
-      ;; I put a time limit on gh actions
-      (js/setTimeout
-       (fn [] (-> (.quit client)
-                  (println :redis :quit-connect))) 3000))))
+      (p/let [_ (config-reader client (or js/process.env.CONFIG_BOTS
+                                          "./bots.yml"))]
+        (println "All feeds processed successfully")
+        (.quit client)
+        (println :redis :quit-connect)))))
