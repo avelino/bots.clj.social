@@ -6,7 +6,7 @@
   "license": "MIT",
   "dependencies": {
     "@extractus/feed-extractor": "^7.1.6",
-    "fast-xml-parser": ">=5.2.5",
+    "fast-xml-parser": ">=5.3.0",
     "cross-fetch": "^4.1.0",
     "masto": "^7.2.0",
     "md5": "^2.3.0",
